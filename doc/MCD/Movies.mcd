@@ -1,0 +1,13 @@
+CATEGORY: category number, category name
+HAS, 1N MOVIE, 0N CATEGORY
+
+WRITE, 0N PERSON, 0N MOVIE
+
+MOVIE: movie number, movie title, release_date
+ACT, 0N MOVIE, 0N PERSON: character name
+PERSON: person number, name, birth_date
+
+DIRECT, 0N PERSON, 11 MOVIE
+
+POST: post number, post title, content, date
+REFER, 0N POST, 0N MOVIE

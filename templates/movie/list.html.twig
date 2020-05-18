@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent () }}{% endblock %}
+
+{% block body %}
+
+{% dump(movies) %}
+
+<h1>Tout les films</h1>
+<ul>
+    {% for movie in movies %}
+    <li><a href="{{ path("movie_view", {id: movie.id} ) }}">{{ movie.title | capitalize }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

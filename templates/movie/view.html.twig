@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent () }}{% endblock %}
+
+{% block body %}
+
+{% dump(movie) %}
+
+<h1>{{ movie.title }}</h1>
+
+<p><small> Dirigé par: </small> {{ movie.director.name }} </p>
+{% for writer in movie.writers %}
+<p><small>Écrit par:</small> {{ writer.name }}</p>
+{% endfor %}
+<hr>
+<h2>Dans les catégories : </h2>
+<ul>
+    {% for category in movie.categories %}
+    <li>{{ category.name | capitalize }}</li>
+    {% endfor %}
+</ul>
+
+<hr>
+{% for actor  in movie.movieActors %}
+<h3>Acteur: </h3>
+<ul>
+    <li>{{ actor.person.name }}</li>
+
+    <ul>
+        <h4>Character: </h4>
+        <li>{{ actor.characterName }}</li>
+    </ul>
+</ul>
+{% endfor %}
+
+<hr>
+<h2>Posts</h2>
+{% for post in movie.posts %}
+<div>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content }}</p>
+    <small>{{ post.date|date }}</small>
+</div>
+<hr>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,136 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="463" height="411" view_box="0 0 463 411"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Sun, 17 May 2020 05:36:28</desc>
+
+<rect id="frame" x="0" y="0" width="463" height="411" fill="none" stroke="none" stroke-width="0"/>
+
+<!-- Association WRITE -->
+<line x1="394" y1="196" x2="234" y2="120" stroke="#726f83" stroke-width="1"/>
+<text x="306" y="179.782214497" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<line x1="78" y1="196" x2="234" y2="120" stroke="#726f83" stroke-width="1"/>
+<text x="139" y="180.906824288" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<g id="association-WRITE">
+	<path d="M 249 94 a 14 14 90 0 1 14 14 V 120 h -58 V 108 a 14 14 90 0 1 14 -14" fill="#b2bba4" stroke="#b2bba4" stroke-width="0"/>
+	<path d="M 263 120.0 v 12 a 14 14 90 0 1 -14 14 H 219 a 14 14 90 0 1 -14 -14 V 120.0 H 58" fill="#ccd6ba" stroke="#ccd6ba" stroke-width="0"/>
+	<rect x="205" y="94" width="58" height="52" fill="none" rx="14" stroke="#85956b" stroke-width="1.5"/>
+	<line x1="205" y1="120" x2="263" y2="120" stroke="#85956b" stroke-width="1"/>
+	<text x="212" y="112.6" fill="#27360c" font-family="Courier New" font-size="14">WRITE</text>
+</g>
+
+<!-- Association REFER -->
+<line x1="78" y1="349" x2="234" y2="349" stroke="#726f83" stroke-width="1"/>
+<text x="135" y="365.0" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<line x1="78" y1="196" x2="234" y2="349" stroke="#726f83" stroke-width="1"/>
+<text x="101.836663226" y="256" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<g id="association-REFER">
+	<path d="M 249 323 a 14 14 90 0 1 14 14 V 349 h -58 V 337 a 14 14 90 0 1 14 -14" fill="#b2bba4" stroke="#b2bba4" stroke-width="0"/>
+	<path d="M 263 349.0 v 12 a 14 14 90 0 1 -14 14 H 219 a 14 14 90 0 1 -14 -14 V 349.0 H 58" fill="#ccd6ba" stroke="#ccd6ba" stroke-width="0"/>
+	<rect x="205" y="323" width="58" height="52" fill="none" rx="14" stroke="#85956b" stroke-width="1.5"/>
+	<line x1="205" y1="349" x2="263" y2="349" stroke="#85956b" stroke-width="1"/>
+	<text x="212" y="341.6" fill="#27360c" font-family="Courier New" font-size="14">REFER</text>
+</g>
+
+<!-- Association HAS -->
+<line x1="78" y1="196" x2="234" y2="44" stroke="#726f83" stroke-width="1"/>
+<text x="102.099036803" y="144" fill="#726f83" font-family="Courier New" font-size="12">1,N</text>
+<line x1="78" y1="44" x2="234" y2="44" stroke="#726f83" stroke-width="1"/>
+<text x="152" y="60.0" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<g id="association-HAS">
+	<path d="M 240 18 a 14 14 90 0 1 14 14 V 44 h -40 V 32 a 14 14 90 0 1 14 -14" fill="#b2bba4" stroke="#b2bba4" stroke-width="0"/>
+	<path d="M 254 44.0 v 12 a 14 14 90 0 1 -14 14 H 228 a 14 14 90 0 1 -14 -14 V 44.0 H 40" fill="#ccd6ba" stroke="#ccd6ba" stroke-width="0"/>
+	<rect x="214" y="18" width="40" height="52" fill="none" rx="14" stroke="#85956b" stroke-width="1.5"/>
+	<line x1="214" y1="44" x2="254" y2="44" stroke="#85956b" stroke-width="1"/>
+	<text x="221" y="36.6" fill="#27360c" font-family="Courier New" font-size="14">HAS</text>
+</g>
+
+<!-- Association DIRECT -->
+<line x1="394" y1="196" x2="234" y2="272" stroke="#726f83" stroke-width="1"/>
+<text x="306" y="220.217785503" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<line x1="78" y1="196" x2="234" y2="272" stroke="#726f83" stroke-width="1"/>
+<text x="139" y="219.093175712" fill="#726f83" font-family="Courier New" font-size="12">1,1</text>
+<g id="association-DIRECT">
+	<path d="M 253 246 a 14 14 90 0 1 14 14 V 272 h -66 V 260 a 14 14 90 0 1 14 -14" fill="#b2bba4" stroke="#b2bba4" stroke-width="0"/>
+	<path d="M 267 272.0 v 12 a 14 14 90 0 1 -14 14 H 215 a 14 14 90 0 1 -14 -14 V 272.0 H 66" fill="#ccd6ba" stroke="#ccd6ba" stroke-width="0"/>
+	<rect x="201" y="246" width="66" height="52" fill="none" rx="14" stroke="#85956b" stroke-width="1.5"/>
+	<line x1="201" y1="272" x2="267" y2="272" stroke="#85956b" stroke-width="1"/>
+	<text x="208" y="264.6" fill="#27360c" font-family="Courier New" font-size="14">DIRECT</text>
+</g>
+
+<!-- Association ACT -->
+<line x1="78" y1="196" x2="234" y2="196" stroke="#726f83" stroke-width="1"/>
+<text x="139" y="212.0" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<line x1="394" y1="196" x2="234" y2="196" stroke="#726f83" stroke-width="1"/>
+<text x="306" y="212.0" fill="#726f83" font-family="Courier New" font-size="12">0,N</text>
+<g id="association-ACT">
+	<path d="M 287 170 a 14 14 90 0 1 14 14 V 196 h -134 V 184 a 14 14 90 0 1 14 -14" fill="#b2bba4" stroke="#b2bba4" stroke-width="0"/>
+	<path d="M 301 196.0 v 12 a 14 14 90 0 1 -14 14 H 181 a 14 14 90 0 1 -14 -14 V 196.0 H 134" fill="#ccd6ba" stroke="#ccd6ba" stroke-width="0"/>
+	<rect x="167" y="170" width="134" height="52" fill="none" rx="14" stroke="#85956b" stroke-width="1.5"/>
+	<line x1="167" y1="196" x2="301" y2="196" stroke="#85956b" stroke-width="1"/>
+	<text x="221" y="188.6" fill="#27360c" font-family="Courier New" font-size="14">ACT</text>
+	<text x="174" y="214.6" fill="#607734" font-family="Courier New" font-size="14">character name</text>
+</g>
+
+<!-- Entity CATEGORY -->
+<g id="entity-CATEGORY">
+	<g id="frame-CATEGORY">
+		<rect x="9" y="9" width="138" height="26" fill="#97b8ff" stroke="#97b8ff" stroke-width="0"/>
+		<rect x="9" y="35.0" width="138" height="44" fill="#c0d4ff" stroke="#c0d4ff" stroke-width="0"/>
+		<rect x="9" y="9" width="138" height="70" fill="none" stroke="#578dff" stroke-width="1.5"/>
+		<line x1="9" y1="35" x2="147" y2="35" stroke="#578dff" stroke-width="1"/>
+	</g>
+	<text x="44" y="27.6" fill="#131114" font-family="Courier New" font-size="14">CATEGORY</text>
+	<text x="14" y="53.6" fill="#3e3c42" font-family="Courier New" font-size="14">category number</text>
+	<line x1="14" y1="56.0" x2="141" y2="56.0" stroke="#3e3c42" stroke-width="1"/>
+	<text x="14" y="71.6" fill="#3e3c42" font-family="Courier New" font-size="14">category name</text>
+</g>
+
+<!-- Entity MOVIE -->
+<g id="entity-MOVIE">
+	<g id="frame-MOVIE">
+		<rect x="22" y="152" width="112" height="26" fill="#97b8ff" stroke="#97b8ff" stroke-width="0"/>
+		<rect x="22" y="178.0" width="112" height="62" fill="#c0d4ff" stroke="#c0d4ff" stroke-width="0"/>
+		<rect x="22" y="152" width="112" height="88" fill="none" stroke="#578dff" stroke-width="1.5"/>
+		<line x1="22" y1="178" x2="134" y2="178" stroke="#578dff" stroke-width="1"/>
+	</g>
+	<text x="56" y="170.6" fill="#131114" font-family="Courier New" font-size="14">MOVIE</text>
+	<text x="27" y="196.6" fill="#3e3c42" font-family="Courier New" font-size="14">movie number</text>
+	<line x1="27" y1="199.0" x2="129" y2="199.0" stroke="#3e3c42" stroke-width="1"/>
+	<text x="27" y="214.6" fill="#3e3c42" font-family="Courier New" font-size="14">movie title</text>
+	<text x="27" y="232.6" fill="#3e3c42" font-family="Courier New" font-size="14">release_date</text>
+</g>
+
+<!-- Entity POST -->
+<g id="entity-POST">
+	<g id="frame-POST">
+		<rect x="26" y="296" width="104" height="26" fill="#97b8ff" stroke="#97b8ff" stroke-width="0"/>
+		<rect x="26" y="322.0" width="104" height="80" fill="#c0d4ff" stroke="#c0d4ff" stroke-width="0"/>
+		<rect x="26" y="296" width="104" height="106" fill="none" stroke="#578dff" stroke-width="1.5"/>
+		<line x1="26" y1="322" x2="130" y2="322" stroke="#578dff" stroke-width="1"/>
+	</g>
+	<text x="60" y="314.6" fill="#131114" font-family="Courier New" font-size="14">POST</text>
+	<text x="31" y="340.6" fill="#3e3c42" font-family="Courier New" font-size="14">post number</text>
+	<line x1="31" y1="343.0" x2="125" y2="343.0" stroke="#3e3c42" stroke-width="1"/>
+	<text x="31" y="358.6" fill="#3e3c42" font-family="Courier New" font-size="14">post title</text>
+	<text x="31" y="376.6" fill="#3e3c42" font-family="Courier New" font-size="14">content</text>
+	<text x="31" y="394.6" fill="#3e3c42" font-family="Courier New" font-size="14">date</text>
+</g>
+
+<!-- Entity PERSON -->
+<g id="entity-PERSON">
+	<g id="frame-PERSON">
+		<rect x="334" y="152" width="120" height="26" fill="#97b8ff" stroke="#97b8ff" stroke-width="0"/>
+		<rect x="334" y="178.0" width="120" height="62" fill="#c0d4ff" stroke="#c0d4ff" stroke-width="0"/>
+		<rect x="334" y="152" width="120" height="88" fill="none" stroke="#578dff" stroke-width="1.5"/>
+		<line x1="334" y1="178" x2="454" y2="178" stroke="#578dff" stroke-width="1"/>
+	</g>
+	<text x="368" y="170.6" fill="#131114" font-family="Courier New" font-size="14">PERSON</text>
+	<text x="339" y="196.6" fill="#3e3c42" font-family="Courier New" font-size="14">person number</text>
+	<line x1="339" y1="199.0" x2="449" y2="199.0" stroke="#3e3c42" stroke-width="1"/>
+	<text x="339" y="214.6" fill="#3e3c42" font-family="Courier New" font-size="14">name</text>
+	<text x="339" y="232.6" fill="#3e3c42" font-family="Courier New" font-size="14">birth_date</text>
+</g>
+</svg>
