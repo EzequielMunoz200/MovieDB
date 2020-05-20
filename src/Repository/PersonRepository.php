@@ -19,6 +19,33 @@ class PersonRepository extends ServiceEntityRepository
         parent::__construct($registry, Person::class);
     }
 
+    public function findWithFullData($id){
+
+        $builder = $this->createQueryBuilder('person');
+        $builder->where("person.id = :id");
+        $builder->setParameter('id', $id);
+
+       
+
+        //je crée une jointure avec la table movie-actor
+        $builder->leftjoin('person.movieActors', 'actor');
+        //J'ajoute l'acteur au select pour que doctrine alimente les objets associés
+        $builder->addSelect('actor');
+
+        $builder->leftjoin('actor.movie', 'movie');
+        $builder->addSelect('movie');
+        $builder->orderBy('movie.releaseDate', 'DESC');
+
+        $builder->leftJoin('person.writedMovies', 'wm');
+        $builder->addSelect('wm');
+
+
+        $query = $builder->getQuery();
+        $result = $query->getOneOrNullResult();
+
+        return $result;
+    }
+
     // /**
     //  * @return Person[] Returns an array of Person objects
     //  */

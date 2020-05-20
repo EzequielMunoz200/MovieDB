@@ -3,6 +3,8 @@
 {% block title %}{{ parent() }} ~ Catégories{% endblock %}
 
 {% block body %}
+
+{% dump(categories) %}
 {% for category in categories %}
 <li><a href="{{ path("category-view", {id: category.id} ) }}">{{ category.name | capitalize}}</a></li>
 {% endfor %}

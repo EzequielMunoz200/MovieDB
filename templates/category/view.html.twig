@@ -6,13 +6,13 @@
 
 {% dump(category) %}
 
-<h1>{{ category.name | capitalize }}</h1>
+<h1>{{ category.name|capitalize }}</h1>
 
-<h2>Tous les films de la catégorie <strong>{{ category.name }}</strong></h2>
+<h3>Tous les films de la catégorie <strong>{{ category.name|capitalize }}</strong></h3>
 
 <ul>
     {% for movie in category.movies %}
-    <li><a href="{{ path("movie_view", {id: movie.id} ) }}">{{ movie.title }}</a></li>
+    <li><a href="{{ path("movie_view", {id: movie.id} ) }}">{{ movie.title|capitalize}}</a></li>
    
     {% endfor %}
 </ul>

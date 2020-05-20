@@ -19,6 +19,24 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findWithFullData($id){
+        $builder = $this->createQueryBuilder("cat");
+        $builder->where("cat.id = :id");
+        $builder->setParameter('id', $id);
+        
+
+        //je crée une jointure avec la table movie-actor
+        $builder->leftjoin('cat.movies', 'movies');
+        //J'ajoute l'acteur au select pour que doctrine alimente les objets associés
+        $builder->addSelect('movies');
+
+        $query = $builder->getQuery();
+        $result = $query->getOneOrNullResult();
+
+        return $result;
+
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

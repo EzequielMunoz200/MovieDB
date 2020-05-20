@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+
+{# {{ dump(person) }} #}
+
+<h1>{{ person.name }}</h1>
+<p>Né(e) le: {{ person.birthDate|date("d - m - Y") }}</p>
+
+<h4>Les films dans lesquels il a joué :</h4>
+
+{# {{ dump(person.movieActors.owner.movieActors[0].movie.releaseDate) }} #}
+<ul>
+    {% for movie in person.movieActors.owner.movieActors %}
+    <li>{{ movie.movie.title|capitalize}} ({{ movie.movie.releaseDate|date("Y") }})</li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+{% endblock %}

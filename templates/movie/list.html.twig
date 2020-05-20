@@ -7,6 +7,10 @@
 {% dump(movies) %}
 
 <h1>Tout les films</h1>
+<form action="" method="GET">
+    <input type="text" name="search" placeholder="Rechercher" value="{{ search }}">
+    <button>Go</button>
+</form>
 <ul>
     {% for movie in movies %}
     <li><a href="{{ path("movie_view", {id: movie.id} ) }}">{{ movie.title | capitalize }}</a></li>
