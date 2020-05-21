@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-{{ parent () }} - Créer une catégorie
-{% endblock %}
+{% block title %}{{ parent() }} {{ pageTitle }}{% endblock %}
 
 {% block body %}
-<h1>Créer une catégorie</h1>
+
+{# {% dump(movie) %} #}
+<h1>Ajouter un film</h1>
 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 {{ form_widget(form) }}
 <button class="btn btn-primary" type="submit">Valider</button>
-<a class="btn btn-link" href="{{ path("category_list") }}">Annuler</a>
+<a class="btn btn-link" href="{{ path('movie_list') }}">Annuler</a>
 {{ form_end(form) }}
 
 {% endblock %}

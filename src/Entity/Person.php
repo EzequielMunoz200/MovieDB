@@ -6,6 +6,10 @@ use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=PersonRepository::class)
@@ -21,11 +25,22 @@ class Person
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le message d erreur ici")
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 50,
+     *      minMessage = "Your name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your name cannot be longer than {{ limit }} characters",
+     *      allowEmptyString = false
+     * )
      */
     private $name;
 
     /**
+     *
      * @ORM\Column(type="datetime")
+     * @Assert\NotNull
+     * @Assert\NotBlank(message="le message d erreur ici")
      */
     private $birthDate;
 
@@ -79,7 +94,7 @@ class Person
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeInterface $birthDate): self
+    public function setBirthDate(?\DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
 

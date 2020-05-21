@@ -1,40 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent () }}{% endblock %}
+{% block title %}{{ parent () }}{{ pageTitle }}{% endblock %}
 
 {% block body %}
 
 {% dump(movie) %}
 
-<h1>{{ movie.title }}</h1>
+<div class="d-flex justify-content-between flex-column">
+    <div>
+        <h1>{{ movie.title|capitalize }}</h1>
+    </div>
+    <div class="d-flex flex-row align-items-center justify-content-between">
+        <a class="btn btn-secondary p-2  my-2" href="{{ path('movie_update', {id:movie.id}) }}"
+            role="button">Mettre à jour</a>
+      {#   {{ form_start(formViewDelete, {attr: {novalidate: 'novalidate'}}) }}
+        <button class="btn btn-danger p-2" type="submit">Suprimmer la catégorie actuel</button>
 
-<p><small> Dirigé par: </small> {{ movie.director.name }} </p>
-{% for writer in movie.writers %}
-<p><small>Écrit par:</small> {{ writer.name }}</p>
-{% endfor %}
+        {{ form_end(formViewDelete) }} #}
+    </div>
+
+</div>
+<a class="btn btn-link" href="{{ path('movie_list') }}">Annuler</a>
+
+<p><small>Date de sortie : </small>{{ movie.releaseDate|format_datetime(pattern="d MMMM YYYY",  locale='fr') }}</p>
+
+<p><small> Dirigé par : </small></p>
+<ul>
+    <li><a href="{{  path("person_view", {id: movie.director.id} )  }}">{{ movie.director.name }}</a></li>
+</ul>
+
+<p><small>Écrit par : </small></p>
+<ul>
+    {% for writer in movie.writers %}
+    <li><a href="{{  path("person_view", {id: writer.id} )  }}">{{ writer.name }}</a></li>
+    {% endfor %}
+</ul>
 <hr>
-<h2>Dans les catégories : </h2>
+<p><small>Dans les catégories : </small></p>
 <ul>
     {% for category in movie.categories %}
-    <li>{{ category.name | capitalize }}</li>
+    <li><a href="{{  path("category_view", {id: category.id} )  }}">{{ category.name | capitalize }}</li></a>
     {% endfor %}
 </ul>
 
 <hr>
+<p><small>Acteurs: </small></p>
 {% for actor  in movie.movieActors %}
-<h3>Acteur: </h3>
+
 <ul>
-    <li>{{ actor.person.name }}</li>
+    <li><strong><a href="{{  path("person_view", {id: actor.person.id} )  }}">{{ actor.person.name }}</a></strong></li>
 
     <ul>
-        <h4>Character: </h4>
-        <li>{{ actor.characterName }}</li>
+        <li>en tant que <strong>{{ actor.characterName }}</strong></li>
     </ul>
 </ul>
 {% endfor %}
 
 <hr>
-<h2>Posts</h2>
+<p><small>Posts</small></p>
 {% for post in movie.posts %}
 <div>
     <h3>{{ post.title }}</h3>

@@ -6,6 +6,8 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -21,16 +23,28 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotNull
+     * @Assert\Length(min=2, max=150)
      */
     private $title;
 
+     /**
+     * @ORM\Column(type="string")
+     */
+    private $posterFilename;
+
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotNull
+     * @Assert\Type(\DateTime::class )
      */
     private $releaseDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="movies")
+     * @Assert\Count(min=1, max=5)
+     * 
      */
     private $categories;
 
@@ -47,11 +61,15 @@ class Movie
     /**
      * @ORM\ManyToMany(targetEntity=Person::class, inversedBy="writedMovies")
      * @ORM\JoinTable(name="movie_writer")
+     * @Assert\Count(min=1)
+     * @Assert\NotNull
      */
     private $writers;
 
      /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="directedMovies")
+     * @Assert\Count(min=1)
+     * @Assert\NotNull
      */
     private $director;
 
@@ -213,6 +231,18 @@ class Movie
     public function setDirector(?Person $director): self
     {
         $this->director = $director;
+
+        return $this;
+    }
+
+    public function getPosterFilename(): ?string
+    {
+        return $this->posterFilename;
+    }
+
+    public function setPosterFilename(string $posterFilename): self
+    {
+        $this->posterFilename = $posterFilename;
 
         return $this;
     }

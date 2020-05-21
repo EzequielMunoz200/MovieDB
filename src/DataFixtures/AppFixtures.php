@@ -19,10 +19,10 @@ class AppFixtures extends Fixture
         $categoryList = [];
         $categories = [
             "Action", "Adventure", "Animation", "Biography", "Comedy",
-        ]; //"Crime", "Documentary", "Drama",
-        // "Family", "Fantasy", "Film Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi",
-        // "Short Film", "Sport", "Superhero", "Thriller", "War", "Western"
-        // ];
+       "Crime", "Documentary", "Drama",
+        "Family", "Fantasy", "Film Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi",
+        "Short Film", "Sport", "Superhero", "Thriller", "War", "Western"
+        ];
         foreach ($categories as $categoryName) {
             $category = new Category();
             $category->setName($categoryName);
@@ -44,7 +44,11 @@ class AppFixtures extends Fixture
             $movie = new Movie();
             $movie->setTitle($faker->catchPhrase());
             $director = $personList[mt_rand(0, count($personList) - 1)];
+            $writer1 = $personList[mt_rand(0, count($personList) - 1)];
+            $writer2 = $personList[mt_rand(0, count($personList) - 1)];
             $movie->setDirector($director);
+            $movie->addWriter($writer1);
+            $movie->addWriter($writer2);
 
             for ($j = 0; $j < mt_rand(1, 3); $j++) {
                 $category = $categoryList[mt_rand(0, count($categoryList) - 1)];
