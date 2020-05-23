@@ -6,10 +6,5 @@
 
 {% block body %}
 <h1>Créer une catégorie</h1>
-{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-{{ form_widget(form) }}
-<button class="btn btn-primary" type="submit">Valider</button>
-<a class="btn btn-link" href="{{ path("category_list") }}">Annuler</a>
-{{ form_end(form) }}
-
+{{ include('category/_form.html.twig') }}
 {% endblock %}

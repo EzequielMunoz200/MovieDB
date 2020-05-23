@@ -1,20 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PostController!{% endblock %}
+{% block title %}{{ parent() }} · Posts{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Posts</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td><a href="{{ path('post_show', {id : post.id }) }}">{{ post.id }}</a></td>
+                <td><a href="{{ path('post_show', {id : post.id }) }}">{{ post.title }}</a></td>
+                <td><a href="{{ path('post_show', {id : post.id }) }}">{{ post.content }}</a></td>
+                <td><a href="{{ path('post_show', {id : post.id }) }}">{{ post.date ? post.date|date('d-m-Y') : '' }}</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Il n'y a pas des billets</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/MovieDB/src/Controller/PostController.php'|file_link(0) }}">src/Controller/PostController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/MovieDB/templates/post/index.html.twig'|file_link(0) }}">templates/post/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a class="btn btn-primary" href="{{ path('post_new') }}">Créer un nouveau billet</a>
 {% endblock %}

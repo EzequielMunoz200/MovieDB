@@ -25,7 +25,7 @@ class Person
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="le message d erreur ici")
+     * @Assert\NotBlank(allowNull=false, message="Nom de la personne non renseigné")
      * @Assert\Length(
      *      min = 1,
      *      max = 50,
@@ -39,8 +39,7 @@ class Person
     /**
      *
      * @ORM\Column(type="datetime")
-     * @Assert\NotNull
-     * @Assert\NotBlank(message="le message d erreur ici")
+     * @Assert\NotBlank(allowNull=false, message="Date de naissance non renseigné")
      */
     private $birthDate;
 
@@ -59,17 +58,16 @@ class Person
      */
     private $directedMovies;
 
- 
-
-  
-
-
-
     public function __construct()
     {
         $this->movieActors = new ArrayCollection();
         $this->writedMovies = new ArrayCollection();
         $this->directedMovies = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int

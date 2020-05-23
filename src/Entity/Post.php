@@ -42,6 +42,13 @@ class Post
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+        $this->date = new \DateTime();
+    }
+
+    public function __toString()
+    {
+     
+        return $this->title;
     }
 
     public function getId(): ?int
@@ -78,7 +85,7 @@ class Post
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 

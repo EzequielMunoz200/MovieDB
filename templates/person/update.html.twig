@@ -7,8 +7,7 @@
 {# {% dump(person) %} #}
 <div class="d-flex justify-content-between">
     <h1>Mettre à jour les données de : {{ person.name }}</h1>
-    <a class="btn btn-danger align-self-center" href="{{ path('person_delete', {'id' : person.id }) }}"
-        onclick="return confirm('Confirmez la suppression')">Supprimer</a>
+    {{ include('person/_delete_form.html.twig') }}
 </div>
 
 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}

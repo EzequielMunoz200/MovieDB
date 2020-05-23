@@ -11,32 +11,36 @@
         <h1>{{ movie.title|capitalize }}</h1>
     </div>
     <div class="d-flex flex-row align-items-center justify-content-between">
-        <a class="btn btn-secondary p-2  my-2" href="{{ path('movie_update', {id:movie.id}) }}"
-            role="button">Mettre à jour</a>
-      {#   {{ form_start(formViewDelete, {attr: {novalidate: 'novalidate'}}) }}
-        <button class="btn btn-danger p-2" type="submit">Suprimmer la catégorie actuel</button>
-
-        {{ form_end(formViewDelete) }} #}
+        <a class="btn btn-secondary p-2  my-2" href="{{ path('movie_update', {id:movie.id}) }}" role="button">Mettre à
+            jour</a>
     </div>
 
 </div>
 <a class="btn btn-link" href="{{ path('movie_list') }}">Annuler</a>
+<hr>
+{% if movie.imageFilename is not empty %}
+<img class="col-10 col-md-5" src="{{ asset('uploads/movie_images/' ~ movie.imageFilename ) }}" alt="">
+{# <img src="{{ asset('uploads/movie_images/' ~ movie.imageFilename ) | imagine_filter('my_thumb') }}" /> #}
+<hr>
+{% endif %}
 
-<p><small>Date de sortie : </small>{{ movie.releaseDate|format_datetime(pattern="d MMMM YYYY",  locale='fr') }}</p>
 
-<p><small> Dirigé par : </small></p>
+<small>Date de sortie : </small><p>{{ movie.releaseDate|format_datetime(pattern="d MMMM YYYY",  locale='fr') }}</p>
+<hr>
+
+<small> Dirigé par : </small>
 <ul>
     <li><a href="{{  path("person_view", {id: movie.director.id} )  }}">{{ movie.director.name }}</a></li>
 </ul>
-
-<p><small>Écrit par : </small></p>
+<hr>
+<small>Écrit par : </small>
 <ul>
     {% for writer in movie.writers %}
     <li><a href="{{  path("person_view", {id: writer.id} )  }}">{{ writer.name }}</a></li>
     {% endfor %}
 </ul>
 <hr>
-<p><small>Dans les catégories : </small></p>
+<small>Dans les catégories : </small>
 <ul>
     {% for category in movie.categories %}
     <li><a href="{{  path("category_view", {id: category.id} )  }}">{{ category.name | capitalize }}</li></a>
@@ -44,7 +48,10 @@
 </ul>
 
 <hr>
-<p><small>Acteurs: </small></p>
+<small>Acteurs: </small> <a class="btn btn-link" href="{{ path('movie_actor_add', {id: movie.id }) }}"> + Ajouter un
+        acteur</a>
+
+
 {% for actor  in movie.movieActors %}
 
 <ul>
@@ -57,7 +64,7 @@
 {% endfor %}
 
 <hr>
-<p><small>Posts</small></p>
+<small>Posts</small>
 {% for post in movie.posts %}
 <div>
     <h3>{{ post.title }}</h3>

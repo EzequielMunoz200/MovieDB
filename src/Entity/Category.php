@@ -29,7 +29,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="le message d erreur ici")
+     * @Assert\NotBlank(message="Nom de la catégorie non renseigné")
      * 
      */
     //par ex. @Assert\lenght(min=2)
@@ -47,6 +47,10 @@ class Category
     
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 
 
     public function getId(): ?int
@@ -59,7 +63,7 @@ class Category
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

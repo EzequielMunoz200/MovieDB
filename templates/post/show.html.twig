@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+    <h1>Post</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ post.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ post.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ post.content }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ post.date ? post.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-link" href="{{ path('post_index') }}">Annuler</a>
+
+        <a class="btn btn-secondary" href="{{ path('post_edit', {'id': post.id}) }}">Mettre à jour</a>
+    
+        {{ include('post/_delete_form.html.twig') }}
+    </div>
+    
+{% endblock %}

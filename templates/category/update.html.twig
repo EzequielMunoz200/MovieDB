@@ -5,7 +5,10 @@
 {% endblock %}
 {% dump(app) %}
 {% block body %}
-<h1>Mettre à jour : {{ category.name }}</h1>
+<div class="d-flex justify-content-between">
+    <h1>Mettre à jour : {{ category.name }}</h1>
+    {{ include('category/_delete_form.html.twig') }}
+</div>
 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 {{ form_widget(form) }}
 <button class="btn btn-primary" type="submit">Valider</button>

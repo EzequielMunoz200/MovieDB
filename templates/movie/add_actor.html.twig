@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} {{ pageTitle }}{% endblock %}
+
+{% block body %}
+
+
+<h1>Ajouter un acteur pour : <em>{{ movie.title|capitalize }}</em></h1>
+
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+{{ form_widget(form) }}
+<button class="btn btn-primary" type="submit">Valider</button>
+<a class="btn btn-link" href="{{ path('movie_list') }}">Annuler</a>
+{{ form_end(form) }}
+{% block javascripts2 %}
+<script src="{{ asset('js/label_input_file.js') }}"></script>
+{% endblock %}
+{% endblock %}

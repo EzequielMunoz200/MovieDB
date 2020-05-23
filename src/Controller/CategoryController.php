@@ -4,23 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Form\CategoryDeleteType;
-use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/category")
+ * @Route("/category", name="category_")
  */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/list", name="category_list", methods={"GET"})
+     * @Route("/list", name="list", methods={"GET"})
      */
     public function list()
     {
@@ -31,7 +26,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="category_view", methods={"GET", "POST"})
+     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="view", methods={"GET", "POST"})
      */
     public function view(Request $request, $id)
     {
@@ -39,36 +34,21 @@ class CategoryController extends AbstractController
         $category = $this->getDoctrine()->getRepository(Category::class)->findWithFullData($id);
 
         if (!$category) {
-            throw $this->createNotFoundException("Cette catégorie n'existe pas !");
+            throw $this->createNotFoundException('Cette catégorie n\'existe pas !');
         }
-        //afficher le form delete
-        $formViewDelete = $this->createForm(CategoryDeleteType::class, $category);
-
-         if ($this->delete($request, $category, $formViewDelete)) {
-            return $this->redirectToRoute('category_list');
-
-        } 
-
-
 
         return $this->render('category/view.html.twig', [
             'category' => $category,
-            "formViewDelete" => $formViewDelete->createView()
         ]);
     }
 
     /**
-     * @Route("/add", name="category_add", methods={"GET", "POST"})
+     * @Route("/add", name="add", methods={"GET", "POST"})
      */
     public function add(Request $request)
     {
 
         $newCategory = new Category();
-
-        /*  $builder = $this->createFormBuilder($newCategory);
-        $builder->add("name", TextType::class);
-        $builder->add("submit", SubmitType::class, ["label" => "Valider"]);
-        $form = $builder->getForm(); */
 
         $form = $this->createForm(CategoryType::class, $newCategory);
 
@@ -80,18 +60,18 @@ class CategoryController extends AbstractController
             $manager->persist($newCategory);
             $manager->flush();
 
-            $this->addFlash("success", "La catégorie a été ajoutée");
+            $this->addFlash('success', 'La catégorie a été ajoutée');
 
             return $this->redirectToRoute('category_list');
         }
 
 
-        return $this->render('category/add.html.twig', ["form" => $form->createView()]);
+        return $this->render('category/add.html.twig', ['form' => $form->createView()]);
     }
 
 
     /**
-     * @Route("/{id}/update", name="category_update", methods={"GET", "POST"})
+     * @Route("/{id}/update", name="update", methods={"GET", "POST"})
      */
     public function update(Request $request, Category $category)
     {
@@ -110,35 +90,31 @@ class CategoryController extends AbstractController
             //$manager->persist($category);
             $manager->flush();
 
-            $this->addFlash("success", "La catégorie a été mise à jour");
+            $this->addFlash('success', 'La catégorie a été mise à jour');
 
-            return $this->redirectToRoute('category_view', ["id" => $category->getId()]);
+            return $this->redirectToRoute('category_view', ['id' => $category->getId()]);
         }
 
         return $this->render('category/update.html.twig', [
-            "pageTitle" => " · Mise à jour de la catégorie: ".$category->getName(),
-            "form" => $form->createView(),
-            "category" => $category
+            'pageTitle' => ' · Mise à jour de la catégorie: ' . $category->getName(),
+            'form' => $form->createView(),
+            'category' => $category
         ]);
     }
 
-
-
     /**
-     * @Route("/{id}/delete", name="category_delete", methods={"GET", "POST"})
+     * @Route("/{id}", name="delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Category $category)
+    public function delete(Request $request, Category $category): Response
     {
-
-        $formViewDelete = $this->createForm(CategoryDeleteType::class, $category);
-
-        $formViewDelete->handleRequest($request);
-        if ($formViewDelete->isSubmitted() && $formViewDelete->isValid()) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $manager = $this->getDoctrine()->getManager();
             $manager->remove($category);
             $manager->flush();
 
-            return $this->redirectToRoute('category_list');
+            $this->addFlash('success', 'La catégorie a été supprimée');
         }
+
+        return $this->redirectToRoute('category_list');
     }
 }

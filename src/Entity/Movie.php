@@ -23,27 +23,30 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\NotNull
      * @Assert\Length(min=2, max=150)
+     * @Assert\NotBlank(allowNull=false, message="Titre du film non renseigné")
      */
     private $title;
 
-     /**
-     * @ORM\Column(type="string")
+    /**
+     *@ORM\Column(type="string", length=255, nullable=true)
      */
-    private $posterFilename;
-
+    private $imageFilename;
+    
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotNull
      * @Assert\Type(\DateTime::class )
+     * @Assert\NotBlank(allowNull=false, message="Date de sortie non renseigné")
      */
     private $releaseDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="movies")
-     * @Assert\Count(min=1, max=5)
+     * @Assert\Count(
+     *      min=1, 
+     *      max=5, 
+     *      minMessage="Doit renseigner au moins 1 element de la liste", 
+     *      maxMessage="Doit renseigner au  maximum  5 elements de la liste")
      * 
      */
     private $categories;
@@ -54,22 +57,22 @@ class Movie
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity=MovieActor::class, mappedBy="movie", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=MovieActor::class, mappedBy="movie", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
      */
     private $movieActors;
 
     /**
      * @ORM\ManyToMany(targetEntity=Person::class, inversedBy="writedMovies")
      * @ORM\JoinTable(name="movie_writer")
-     * @Assert\Count(min=1)
+     * @Assert\Count(min=1,minMessage="Doit renseigner au moins 1 element de la liste")
      * @Assert\NotNull
      */
     private $writers;
 
      /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="directedMovies")
-     * @Assert\Count(min=1)
-     * @Assert\NotNull
+     * @Assert\NotBlank(allowNull=false, message="Renseignez un réalisateur")
      */
     private $director;
 
@@ -79,6 +82,11 @@ class Movie
         $this->posts = new ArrayCollection();
         $this->movieActors = new ArrayCollection();
         $this->writers = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
     public function getId(): ?int
@@ -103,7 +111,7 @@ class Movie
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    public function setReleaseDate(?\DateTimeInterface $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
@@ -207,7 +215,6 @@ class Movie
     {
         if (!$this->writers->contains($writer)) {
             $this->writers[] = $writer;
-            $writer->addWritedMovie($this);
         }
 
         return $this;
@@ -217,7 +224,6 @@ class Movie
     {
         if ($this->writers->contains($writer)) {
             $this->writers->removeElement($writer);
-            $writer->removeWritedMovie($this);
         }
 
         return $this;
@@ -235,15 +241,17 @@ class Movie
         return $this;
     }
 
-    public function getPosterFilename(): ?string
+    public function getImageFilename(): ?string
     {
-        return $this->posterFilename;
+        return $this->imageFilename;
     }
 
-    public function setPosterFilename(string $posterFilename): self
+    public function setImageFilename(?string $imageFilename): self
     {
-        $this->posterFilename = $posterFilename;
+        $this->imageFilename = $imageFilename;
 
         return $this;
     }
+
+    
 }

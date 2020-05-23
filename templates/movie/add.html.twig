@@ -4,12 +4,13 @@
 
 {% block body %}
 
-{# {% dump(movie) %} #}
 <h1>Ajouter un film</h1>
-{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-{{ form_widget(form) }}
-<button class="btn btn-primary" type="submit">Valider</button>
+{{ include('movie/_form.html.twig') }}
+<button id="add-actor" class="btn btn-secondary my-2">Ajouter un acteur</button>
 <a class="btn btn-link" href="{{ path('movie_list') }}">Annuler</a>
-{{ form_end(form) }}
 
+{% block javascripts2 %}
+<script src="{{ asset('js/label_input_file.js') }}"></script>
+<script src="{{ asset('js/add_actor.js') }}"></script>
+{% endblock %}
 {% endblock %}

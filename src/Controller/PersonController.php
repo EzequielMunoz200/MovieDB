@@ -4,19 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Person;
 use App\Form\PersonType;
-use App\Repository\PersonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/person")
+ * @Route("/person", name="person_")
  */
 class PersonController extends AbstractController
 {
     /**
-     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="person_view", methods={"GET"})
+     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="view", methods={"GET"})
      */
     public function view($id)
     {
@@ -33,7 +33,7 @@ class PersonController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="person_add", methods={"GET", "POST"})
+     * @Route("/add", name="add", methods={"GET", "POST"})
      */
     public function add(Request $request)
     {
@@ -72,7 +72,7 @@ class PersonController extends AbstractController
 
 
     /**
-     * @Route("/{id}/update", requirements={"id" = "\d+"}, name="person_update", methods={"GET", "POST"})
+     * @Route("/{id}/update", requirements={"id" = "\d+"}, name="update", methods={"GET", "POST"})
      */
     public function update(Request $request, Person $person)
     {
@@ -105,20 +105,22 @@ class PersonController extends AbstractController
 
 
     /**
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="person_delete", methods={"GET"})
+     * @Route("/{id}", name="delete", methods={"DELETE"})
      */
-    public function delete(Person $person)
+    public function delete(Request $request, Person $person): Response
     {
-        if(!$person->getDirectedMovies()->isEmpty()){
+        if (!$person->getDirectedMovies()->isEmpty()) {
             $this->addFlash("warning", "Impossible de supprimer le directeur d'un film existent");
             return $this->redirectToRoute('person_update', ['id' => $person->getId()]);
         }
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->remove($person);
-        $manager->flush();
+        if ($this->isCsrfTokenValid('delete' . $person->getId(), $request->request->get('_token'))) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($person);
+            $manager->flush();
 
-        $this->addFlash("info", $person->getName()." a été supprimé(e)");
+            $this->addFlash("info", $person->getName() . " a été supprimé(e)");
+        }
 
         return $this->redirectToRoute('category_list', ['id' => $person->getId()]);
     }

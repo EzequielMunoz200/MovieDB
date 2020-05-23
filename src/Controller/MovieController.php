@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Movie;
+use App\Entity\MovieActor;
+use App\Form\MovieActorType;
 use App\Form\MovieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,12 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/movie")
+ * @Route("/movie", name="movie_")
  */
 class MovieController extends AbstractController
 {
     /**
-     * @Route("/list", name="movie_list", methods={"GET"})
+     * @Route("/list", name="list", methods={"GET"})
      */
     public function list(Request $request)
     {
@@ -30,7 +32,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="movie_view", methods={"GET"})
+     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="view", methods={"GET"})
      */
     public function view($id)
     {
@@ -47,7 +49,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="movie_add", methods={"GET", "POST"})
+     * @Route("/add", name="add", methods={"GET", "POST"})
      */
     public function add(Request $request)
     {
@@ -55,6 +57,19 @@ class MovieController extends AbstractController
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /**@var UploadFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+                $filename = uniqid() . '.' . $imageFile->guessExtension();
+
+                $imageFile->move(
+                    $this->getParameter('movie_image_directory'),
+                    $filename
+                );
+                $movie->setImageFilename($filename);
+            }
+
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($movie);
             $manager->flush();
@@ -73,13 +88,27 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/update", requirements={"id" = "\d+"}, name="movie_update", methods={"GET", "POST"})
+     * @Route("/{id}/update", requirements={"id" = "\d+"}, name="update", methods={"GET", "POST"})
      */
     public function update(Movie $movie, Request $request)
     {
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /**@var UploadFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+                $filename = uniqid() . '.' . $imageFile->guessExtension();
+
+                $imageFile->move(
+                    $this->getParameter('movie_image_directory'),
+                    $filename
+                );
+                $movie->setImageFilename($filename);
+            }
+
+
             $manager = $this->getDoctrine()->getManager();
             $manager->flush();
 
@@ -96,17 +125,31 @@ class MovieController extends AbstractController
         ]);
     }
 
-
-
     /**
-     * @Route("/add/poster", name="add_poster", methods={"GET"})
+     * @Route("/{id}/actor/add", name="actor_add", requirements={"id" = "\d+"}, methods={"GET", "POST"})
      */
-    public function addPoster()
+    public function addMovieActor(Movie $movie, Request $request)
     {
-        //TODO
+        $movieActor = new MovieActor();
+        $movieActor->setMovie($movie);
 
-        return $this->render('movie/add_poster.html.twig', [
-            'pageTitle' => " · Ajouter un poster"
+        $form = $this->createForm(MovieActorType::class, $movieActor);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($movieActor);
+            $manager->flush();
+
+            $this->addFlash('success', $movieActor->getPerson() . 'a été ajouté');
+            return $this->redirectToRoute('movie_view', ['id' => $movie->getId()]);
+        }
+
+        return $this->render('movie/add_actor.html.twig', [
+            'pageTitle' => ' · Ajouter un acteur',
+            'form' => $form->createView(),
+            'movie' => $movie
         ]);
     }
 }
