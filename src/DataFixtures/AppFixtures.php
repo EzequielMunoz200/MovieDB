@@ -6,12 +6,21 @@ use App\Entity\Category;
 use App\Entity\Movie;
 use App\Entity\MovieActor;
 use App\Entity\Person;
+use App\Service\Slugger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as Fk;
 
 class AppFixtures extends Fixture
 {
+    private $slugger;
+
+    public function __construct(Slugger $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+    //la méthode load n'attend que une objet $manager
     public function load(ObjectManager $manager)
     {
         $faker = Fk::create();
@@ -19,9 +28,9 @@ class AppFixtures extends Fixture
         $categoryList = [];
         $categories = [
             "Action", "Adventure", "Animation", "Biography", "Comedy",
-       "Crime", "Documentary", "Drama",
-        "Family", "Fantasy", "Film Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi",
-        "Short Film", "Sport", "Superhero", "Thriller", "War", "Western"
+            "Crime", "Documentary", "Drama",
+            "Family", "Fantasy", "Film Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi",
+            "Short Film", "Sport", "Superhero", "Thriller", "War", "Western"
         ];
         foreach ($categories as $categoryName) {
             $category = new Category();
@@ -42,7 +51,12 @@ class AppFixtures extends Fixture
         $movieList = [];
         for ($i = 0; $i < 100; $i++) {
             $movie = new Movie();
-            $movie->setTitle($faker->catchPhrase());
+            $title = $faker->catchPhrase();
+            $movie->setTitle($title);
+
+            //ajout de slug pour ce film
+            $movie->setSlug($this->slugger->slugify($title));
+
             $director = $personList[mt_rand(0, count($personList) - 1)];
             $writer1 = $personList[mt_rand(0, count($personList) - 1)];
             $writer2 = $personList[mt_rand(0, count($personList) - 1)];
@@ -63,8 +77,8 @@ class AppFixtures extends Fixture
             $manager->persist($movie);
         }
 
-        
-        foreach($movieList as $movie){
+
+        foreach ($movieList as $movie) {
             $actor = [];
             for ($i = 0; $i < 3; $i++) {
                 $movieactor = new MovieActor();
@@ -74,7 +88,6 @@ class AppFixtures extends Fixture
                 $movieactor->setPerson($actor[$i]);
                 $manager->persist($movieactor);
             }
-            
         }
 
         $manager->flush();
