@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use App\Entity\MovieActor;
 use App\Form\MovieActorType;
 use App\Form\MovieType;
+use App\Service\Slugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,13 +35,15 @@ class MovieController extends AbstractController
     /**
      * @Route("/{id}/view", requirements={"id" = "\d+"}, name="view", methods={"GET"})
      */
-    public function view($id)
+    public function view($id, Slugger $slugger)
     {
         $movie = $this->getDoctrine()->getRepository(Movie::class)->findWithFullData($id);
 
         if (!$movie) {
             throw $this->createNotFoundException("Ce film n'existe pas !");
         }
+
+        //dd($slugger->slugify($movie->getTitle()));
 
         return $this->render('movie/view.html.twig', [
             'pageTitle' => ' · ' . $movie->getTitle(),
@@ -51,12 +54,16 @@ class MovieController extends AbstractController
     /**
      * @Route("/add", name="add", methods={"GET", "POST"})
      */
-    public function add(Request $request)
+    public function add(Request $request, Slugger $slugger)
     {
         $movie = new Movie();
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //on ajoute le slug du $movie à partir de son titre
+            $slug = $slugger->slugify($movie->getTitle());
+            $movie->setSlug($slug);
 
             /**@var UploadFile $imageFile */
             $imageFile = $form->get('imageFile')->getData();
@@ -90,11 +97,15 @@ class MovieController extends AbstractController
     /**
      * @Route("/{id}/update", requirements={"id" = "\d+"}, name="update", methods={"GET", "POST"})
      */
-    public function update(Movie $movie, Request $request)
+    public function update(Movie $movie, Request $request, Slugger $slugger)
     {
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //on recalcule le slug au cas où il a été modifié
+            $slug = $slugger->slugify($movie->getTitle());
+            $movie->setSlug($slug);
 
             /**@var UploadFile $imageFile */
             $imageFile = $form->get('imageFile')->getData();
