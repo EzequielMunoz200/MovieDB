@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Providers\MovieAndGenreProvider;
 use App\Entity\Category;
 use App\Entity\Movie;
 use App\Entity\MovieActor;
@@ -23,7 +24,9 @@ class AppFixtures extends Fixture
     //la méthode load n'attend que une objet $manager
     public function load(ObjectManager $manager)
     {
-        $faker = Fk::create();
+        $faker = Fk::create("fr_FR");
+
+        $faker->addProvider(new MovieAndGenreProvider($faker));
 
         $categoryList = [];
         $categories = [
@@ -51,7 +54,7 @@ class AppFixtures extends Fixture
         $movieList = [];
         for ($i = 0; $i < 100; $i++) {
             $movie = new Movie();
-            $title = $faker->catchPhrase();
+            $title = $faker->movieTitle();
             $movie->setTitle($title);
 
             //ajout de slug pour ce film

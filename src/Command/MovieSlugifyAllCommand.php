@@ -2,6 +2,9 @@
 
 namespace App\Command;
 
+use App\Repository\MovieRepository;
+use App\Service\Slugger;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,19 +16,31 @@ class MovieSlugifyAllCommand extends Command
 {
     protected static $defaultName = 'app:movie:slugify-all';
 
+    private $em;
+    private $movieRepository;
+    private $slugger;
+
+    public function __construct(EntityManagerInterface $em, MovieRepository $movieRepository,  Slugger $slugger)
+    {
+        parent::__construct();
+        
+        $this->slugger = $slugger;
+        $this->movieRepository = $movieRepository;
+        $this->em = $em;
+    }
+
     protected function configure()
     {
-        $this
-            ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
+        $this->setDescription('Calcule et met à jour le slug de tous les films dans la bdd');
+        //->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+        //->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+        // ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        /*   $arg1 = $input->getArgument('arg1');
 
         if ($arg1) {
             $io->note(sprintf('You passed an argument: %s', $arg1));
@@ -33,9 +48,18 @@ class MovieSlugifyAllCommand extends Command
 
         if ($input->getOption('option1')) {
             // ...
+        } */
+
+        $movies = $this->movieRepository->findAll();
+        //dump($movies);
+        foreach ($movies as $movie) {
+            $slug = $this->slugger->slugify($movie->getTitle());
+            $movie->setSlug($slug);
         }
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $this->em->flush();
+
+        $io->success('Tous les films ont maintenant un slug');
 
         return 0;
     }

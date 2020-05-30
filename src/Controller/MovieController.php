@@ -17,6 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MovieController extends AbstractController
 {
+    //On aurait pu utiliser le slugger avec une injection de dépendances
+    //cette technique peut remplacer l'usage des paramètres dans les méthodes
+   /*  private $slugger;
+
+    public function __construct(Slugger $slugger)
+    {
+        $this->slugger = $slugger;
+    } */
+
     /**
      * @Route("/list", name="list", methods={"GET"})
      */
