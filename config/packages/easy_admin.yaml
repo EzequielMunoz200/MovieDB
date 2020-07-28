@@ -41,6 +41,9 @@ easy_admin:
                       }
         Category:
             class: App\Entity\Category
+            form:
+                fields:
+                  - name
         Person:
             class: App\Entity\Person
         Post:

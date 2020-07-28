@@ -77,7 +77,7 @@ class MovieController extends AbstractController
             /**@var UploadFile $imageFile */
             $imageFile = $form->get('imageFile')->getData();
             if ($imageFile) {
-                $filename = uniqid() . '.' . $imageFile->guessExtension();
+                $filename = uniqid() . '.' . $imageFile->getExtension();
 
                 $imageFile->move(
                     $this->getParameter('movie_image_directory'),

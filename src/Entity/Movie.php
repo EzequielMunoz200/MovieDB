@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -18,6 +20,7 @@ class Movie
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"api_v1_movies"})
      */
     private $id;
 
@@ -25,18 +28,21 @@ class Movie
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=2, max=150)
      * @Assert\NotBlank(allowNull=false, message="Titre du film non renseigné")
+     * @Groups({"api_v1_movies"})
      */
     private $title;
 
     /**
      *@ORM\Column(type="string", length=255, nullable=true)
+     *@Groups({"api_v1_movies"})
      */
     private $imageFilename;
-    
+
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Type(\DateTime::class )
      * @Assert\NotBlank(allowNull=false, message="Date de sortie non renseigné")
+     * @Groups({"api_v1_movies"})
      */
     private $releaseDate;
 
@@ -47,6 +53,7 @@ class Movie
      *      max=5, 
      *      minMessage="Doit renseigner au moins 1 element de la liste", 
      *      maxMessage="Doit renseigner au  maximum  5 elements de la liste")
+     * @Groups({"api_v1_movies"})
      * 
      */
     private $categories;
@@ -57,7 +64,7 @@ class Movie
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity=MovieActor::class, mappedBy="movie", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=MovieActor::class, mappedBy="movie", orphanRemoval=true, cascade={"persist", "remove"})
      * @Assert\Valid
      */
     private $movieActors;
@@ -70,9 +77,10 @@ class Movie
      */
     private $writers;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="directedMovies")
      * @Assert\NotBlank(allowNull=false, message="Renseignez un réalisateur")
+     *
      */
     private $director;
 
@@ -80,6 +88,8 @@ class Movie
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
+
+    private $errorsForm;
 
     public function __construct()
     {
@@ -270,5 +280,38 @@ class Movie
         return $this;
     }
 
-    
+
+    /**
+     * Démo pour les API, on peut ajouter des propriété qui n'en sont pas
+     * @Groups({"api_v1_movies"})
+     */
+    public function getCountCategories()
+    {
+        return count($this->categories);
+    }
+
+    /**
+     * @Groups({"api_v1_movies"})
+     */
+    public function getDirectorName()
+    {
+        return $this->director->getName();
+    }
+
+
+    /**
+     * @Groups({"api_v1_movies"})
+     */
+    public function getErrorsForm()
+    {
+        return $this->errorsForm;
+    }
+
+     /**
+     * @Groups({"api_v1_movies"})
+     */
+    public function setErrorsForm($errorsForm)
+    {
+        return $this->errorsForm = $errorsForm;
+    }
 }
