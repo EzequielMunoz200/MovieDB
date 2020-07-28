@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ parent () }} {{ pageTitle }}
+{% endblock %}
+{% dump(app) %}
+{% block body %}
+<div class="d-flex justify-content-between">
+    <h1>Mettre à jour : {{ category.name }}</h1>
+    {{ include('category/_delete_form.html.twig') }}
+</div>
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+{{ form_widget(form) }}
+<button class="btn btn-primary" type="submit">Valider</button>
+<a class="btn btn-link" href="{{ path('category_view', {id : category.id }) }}">Annuler</a>
+{{ form_end(form) }}
+{% endblock %}

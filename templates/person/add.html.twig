@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} {{ pageTitle }}{% endblock %}
+
+{% block body %}
+
+<h1>Ajouter une personne</h1>
+{{ include('person/_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} {{ pageTitle }}{% endblock %}
+
+{% block body %}
+
+{% dump(person) %}
+<div class="d-flex justify-content-between">
+    <h1>{{ person.name }}</h1>
+    <a class="btn btn-info align-self-center " href="{{ path('person_update', {id:person.id}) }}"
+        role="button">Mettre à jour</a>
+</div>
+<p>Né(e) le: {{ person.birthDate|format_datetime(pattern="d MMMM YYYY",  locale='fr') }}</p>
+
+
+{# DIRECTOR #}
+{% if person.directedMovies is not empty %}
+<div class="card mb-4 col-12 p-0">
+    <div class="card-header">
+        Réalisateur
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for movie in person.directedMovies %}
+        <li class="list-group-item"><a class="stretched-link" href="{{ path("movie_view", {id: movie.id}) }}">{{ movie.title|capitalize}}
+                <small>({{ movie.releaseDate|date("Y") }})</small></a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{# WRITERS #}
+{% if person.writedMovies is not empty %}
+<div class="card mb-4 col-12 p-0">
+    <div class="card-header">
+        Scénariste
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for movie in person.writedMovies %}
+        <li class="list-group-item"><a class="stretched-link" href="{{ path("movie_view", {id: movie.id}) }}">{{ movie.title|capitalize}}
+                <small>({{ movie.releaseDate|date("Y") }})</small></a></li>
+
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{# ACTORS #}
+{% if person.movieActors is not empty %}
+
+<div class="card mb-4 col-12 p-0">
+    <div class="card-header">
+        Acteur
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for movie in person.movieActors.owner.movieActors %}
+        <li class="list-group-item"><a class="stretched-link"
+                href="{{ path("movie_view", {id: movie.movie.id}) }}">{{ movie.movie.title|capitalize}}
+                <small>({{ movie.movie.releaseDate|date("Y") }})</small></a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+%%mocodo
+:
+HAS: #movie number, _#category number
+:
+REFER: #post number, _#movie number
+:
+POST: post number, post title, content, date
+:
+
+
+:
+CATEGORY: category number, category name
+:
+MOVIE: movie number, movie title, release_date, #person number
+:
+ACT: #movie number, _#person number, character name
+:
+
+
+:::
+WRITE: #person number, _#movie number
+:
+PERSON: person number, name, birth_date
+:

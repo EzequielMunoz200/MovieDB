@@ -1,0 +1,21 @@
+a:hover {
+    text-decoration: none;
+}
+
+.list-group-item:hover {
+    background-color: #4177ad;
+    color: white;
+    color: whitesmoke;
+}
+
+.list-group-item:hover a {
+    color: whitesmoke;
+}
+
+a {
+    color: #212529;
+}
+
+.card ul li{
+    list-style-type: none;
+}

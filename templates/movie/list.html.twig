@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent () }}{% endblock %}
+
+{% block body %}
+
+{% dump(movies) %}
+
+<div class="d-flex justify-content-between flex-column">
+    <h1>Tout les films</h1>
+    <a class="btn btn-secondary align-self-start" href="{{ path('movie_add') }}" role="button">Ajouter un
+        film</a>
+</div>
+
+<div class="card col-12 mt-4 p-0">
+    <ul class="list-group list-group-flush">
+        {% for movie in movies %}
+        <li class="list-group-item">
+            <a class="stretched-link" href="{{ path('movie_view', {id: movie.id} ) }}">{{ movie.title|capitalize}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

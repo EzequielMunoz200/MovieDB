@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} {{ pageTitle }}{% endblock %}
+
+{% block body %}
+
+{# {% dump(movie) %} #}
+<h1>Modifier un film</h1>
+<a class="btn btn-link" href="{{ path('movie_view', {id: movie.id }) }}">Annuler</a>
+{{ include('movie/_form.html.twig') }}
+<button id="add-actor" class="btn btn-secondary my-2">+ Ajouter un acteur</button>
+<a class="btn btn-link" href="{{ path('movie_view', {id: movie.id }) }}">Annuler</a>
+
+
+{% block javascripts2 %}
+<script src="{{ asset('js/label_input_file.js') }}"></script>
+<script src="{{ asset('js/add_actor.js') }}"></script>
+
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,8 @@
+**HAS** (<ins>#movie number</ins>, <ins>#category number</ins>)  
+**REFER** (<ins>#post number</ins>, <ins>#movie number</ins>)  
+**POST** (<ins>post number</ins>, post title, content, date)  
+**CATEGORY** (<ins>category number</ins>, category name)  
+**MOVIE** (<ins>movie number</ins>, movie title, release_date, #person number)  
+**ACT** (<ins>#movie number</ins>, <ins>#person number</ins>, character name)  
+**WRITE** (<ins>#person number</ins>, <ins>#movie number</ins>)  
+**PERSON** (<ins>person number</ins>, name, birth_date)

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent () }}{% endblock %}
+
+{% block body %}
+
+{% dump(category) %}
+<div class="d-flex justify-content-between flex-column">
+    <div>
+        <p>Tous les films de la catégorie :</p>
+        <h1>{{ category.name|capitalize }}</h1>
+    </div>
+    <div class="d-flex flex-row align-items-center justify-content-between">
+        <a class="btn btn-secondary my-2" href="{{ path('category_update', {id:category.id}) }}"
+            role="button">Mettre à jour</a>
+         
+    </div>
+
+</div>
+<a class="btn btn-link" href="{{ path('category_list') }}">Annuler</a>
+
+{% if category.movies is not empty %}
+<div class="card col-12 mt-4 p-0">
+    <ul class="list-group list-group-flush">
+        {% for movie in category.movies %}
+        <li class="list-group-item"><a class="stretched-link"
+                href="{{ path("movie_view", {id: movie.id} ) }}">{{ movie.title|capitalize}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<p>Il n'y a pas des films dans cette catégorie</p>
+{% endif %}
+
+
+{% endblock %}
