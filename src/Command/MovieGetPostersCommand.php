@@ -58,7 +58,7 @@ class MovieGetPostersCommand extends Command
         foreach ($movies as $movie) {
             //il faut reemplacer les espaces pour %20
             $titleUrl = str_replace(' ', '%20', $movie->getTitle());
-            $jsonString = file_get_contents('http://omdbapi.com/?apikey=45df58a5&t=' . $titleUrl);
+            $jsonString = file_get_contents('http://omdbapi.com/?apikey='.$_ENV['45df58a5&t'].'=' . $titleUrl);
             $objectResponse = json_decode($jsonString);
             if ($objectResponse->Response === 'True' && filter_var($objectResponse->Poster, FILTER_VALIDATE_URL)) {
                 $image = file_get_contents($objectResponse->Poster);
